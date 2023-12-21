@@ -8,29 +8,29 @@ import jdatetime
 import pdfkit
 
 
-order_number = input("Order number: ")
-customer_name = input("Customer name: ")
-economical_number = input("Economical number: ")
-national_code = input("National_code: ")
-address = input("Address: ")
-postal_code = input("Postal code: ")
-phone_number = input("Phone number: ")
+order_number = input("شماره سفارش: ")
+customer_name = input("نام مشتری: ")
+economical_number = input("شماره اقتصادی: ")
+national_code = input("کد ملی: ")
+address = input("آدرس: ")
+postal_code = input("کد پستی: ")
+phone_number = input("شماره تلفن: ")
 print(40 * "*")
 
-number_of_products = int(input("Number of products: "))
+number_of_products = int(input("تعداد محصولات: "))
 
 products = []
 for i in range(number_of_products):
     pr = {}
-    pr["code"] = input("Code: ")
-    pr["name"] = input("Name: ")
-    pr["number"] = int(input("Number: "))
-    pr["unit"] = input("Unit: ")
-    pr["unit_amount"] = int(input("Unit amount: "))
+    pr["code"] = input("کد محصول: ")
+    pr["name"] = input("نام محصول: ")
+    pr["number"] = int(input("تعداد محصول: "))
+    pr["unit"] = input("واحد: ")
+    pr["unit_amount"] = int(input("مبلغ: "))
     pr["total_amount"] = pr["unit_amount"] * pr["number"]
-    pr["discount"] = int(input("Discount: "))
+    pr["discount"] = int(input("تخفیف: "))
     pr["discounted_amount"] = pr["total_amount"] - pr["discount"]
-    pr["tax"] = int(input("Tax: "))
+    pr["tax"] = int(input("مالیات بر ارزش افزوده: "))
     pr["total"] = pr["discounted_amount"] + pr["tax"]
     products.append(pr)
     print(40 * "-")
@@ -52,9 +52,9 @@ for product in products:
     sum_total['sum_tax'] += product['tax']
     sum_total['s_total'] += product['total']
 
-term = input("1-Cash 2-Installment: ")
-terms_of_sale = "نقدی" if term == 1 else "قسطی"
-description = input("Description: ")
+term = int(input("1-نقدی 2-اقساط: "))
+terms_of_sale = "نقدی" if term == 1 else "اقساط"
+description = input("توضیحات: ")
 
 context = {
     "order_number": order_number,
@@ -83,14 +83,14 @@ template = env.get_template('template.html')
 output = template.render(context=context)
 
 # Creating and writing to the new file.
-with open(r"templates/template.html", mode="w", encoding="utf-8") as tm:
+with open(r"templates\new-template.html", mode="w", encoding="utf-8") as tm:
     tm.write(output)
 
 # Installation path of the wkhtmltopdf.
 wkhtmltopdf = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
 
 # Specifying the template file path to convert to HTML.
-file = r"templates/new_template.html"
+file = r"templates\new-template.html"
 
 # Doing wkhtmltopdf config.
 config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf)
